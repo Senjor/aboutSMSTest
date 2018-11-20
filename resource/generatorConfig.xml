@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 指定驱动jar包的路径 -->
+	<classPathEntry location="/Users/1/Desktop/javabigdata/第二阶段项目资料/短信注册验证码/ssm/WebRoot/WEB-INF/lib/mysql-connector-java-5.1.0-bin.jar" ></classPathEntry>
+	
+	<context id="context1">
+		<commentGenerator>
+			<!--去除自动生成注释  -->
+			<property name="suppressAllComments" value="true"></property>
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/testdb"
+			userId="root" password="123" />
+		<!--生成对应的实体类  -->	
+		<javaModelGenerator targetPackage="com.zhiyou.sm.entity"
+			targetProject="ssm" />
+		<!--类对应的核心映射文件  -->	
+		<sqlMapGenerator targetPackage="com.zhiyou.sm.dao" targetProject="ssm" />
+		<!--生成的接口  -->
+		<javaClientGenerator targetPackage="com.zhiyou.sm.dao"
+			targetProject="ssm" type="XMLMAPPER" />
+		<table schema="" tableName="user" enableCountByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false">
+		</table>
+	</context>
+</generatorConfiguration>

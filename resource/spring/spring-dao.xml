@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!--导入属性文件的数据库链接相关的信息 -->
+<!-- 	<context:property-placeholder location="db.properties" /> -->
+
+	<!--配置数据源 -->
+	<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	destroy-method="close">
+	<!-- <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close"> -->
+		<!--配置具体数据库的链接 -->
+		<!-- <property name="driverClassName" value="${driver_class}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property> -->
+		<!--配置具体数据库的链接 -->
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/testdb"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="123"></property>
+	</bean>
+
+	<!--配置 sqlsessionFactory工厂对象 -->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--给数据源对象属性赋值 -->
+		<property name="dataSource" ref="dataSource1"></property>
+		<!-- 扫描entity包使用别名，不然前面配置的mapper直接使用的类名会出错 多个包需要扫描 <property name="typeAliasesPackage" 
+			value="org.seckill.entity;org.seckill.entity2"/> -->
+		<property name="typeAliasesPackage" value="com.zhiyou.sm.entity"></property>
+
+		<!-- 扫描sql配置文件也就是mapper里面的 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+
+		<!--关联mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:mybaits-config.xml"></property>
+	</bean>
+
+
+	<!-- 4 配置扫描dao接口包，动态实现dao接口，自动注入到spring容器中 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 注入到sqlSessionFactory -->
+		<property name="sqlSessionFactoryBeanName" value="sessionFactory"></property>
+		<!-- 给出需要扫描的dao包 -->
+		<property name="basePackage" value="com.zhiyou.sm.dao"></property>
+	</bean>
+
+
+
+</beans>

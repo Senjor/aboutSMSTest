@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<!--springmvc的配置文件的命名规则:    
+	
+		web.xml中servlet的名称-servlet.xml 
+	
+		springmvc的配置文件,默认是放在web-inf 文件夹下的
+	 -->
+	<!--添加mvc的注解驱动  -->
+	<mvc:annotation-driven />
+	<!-- 方法2,对静态资源文件的访问 -->    
+	<!-- <mvc:resources mapping="/js/**" location="/js/" />  
+	<mvc:resources mapping="/img/**" location="/img/" />   -->
+	<!--方法3，使用<mvc:default-servlet-handler/>  -->
+	<mvc:default-servlet-handler/> 
+	<!--创建注解的扫描器  -->
+	<context:component-scan base-package="com.zhiyou.sm.controller"></context:component-scan>
+	
+	<!-- upload settings 文件上传的配置-->
+    <!-- <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="102400000"></property>
+    </bean> -->
+	
+	  <!-- 视图解释类 -->  
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <!--prefix:前缀名称  -->
+        <property name="prefix" value="/WEB-INF/jsp/"/>  
+        <!--suffix:后缀名称  -->
+        <property name="suffix" value=".jsp"/>
+        <!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->  
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />  
+    </bean> 
+	
+
+</beans>
